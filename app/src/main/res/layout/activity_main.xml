@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/network"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试网络" />
+
+    <Button
+        android:id="@+id/job"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试job" />
+
+    <Button
+        android:id="@+id/alarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试alarm" />
+
+    <Button
+        android:id="@+id/keepAlive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="保活" />
+
+    <Button
+        android:id="@+id/cancelKeepAlive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="取消保活" />
+</LinearLayout>
