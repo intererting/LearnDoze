@@ -42,4 +42,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
+
+    // Kotlin + coroutines
+    implementation "androidx.work:work-runtime-ktx:+"
 }

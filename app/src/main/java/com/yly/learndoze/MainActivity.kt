@@ -51,6 +51,7 @@ import java.security.Permissions
  * 1：网络异常
  * 2：job不执行,将会调用onStopJob,当onStopJob返回true，解除doze模式会重新调用onStartJob
  * (job里面的子线程不会停止，就算是打开了doze模式，所以只要内存足够，这个是可以一直执行的）
+ * 3:handler只要系统没杀死还是可以运行的
  *
  */
 class MainActivity : AppCompatActivity() {
@@ -151,26 +152,37 @@ class MainActivity : AppCompatActivity() {
             val alarmMgr = getSystemService(Context.ALARM_SERVICE) as AlarmManager
             alarmMgr.cancel(alarmIntent)
         }
+
+        findViewById<Button>(R.id.handler).setOnClickListener {
+            myHandler.sendEmptyMessage(101)
+        }
     }
 
 
     class MyHandler : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
-            super.handleMessage(msg)
-            Thread {
-                try {
-                    val client = OkHttpClient();
-                    val request = Request.Builder()
-                        .url("https://www.baidu.com")
-                        .build();
-                    val response = client.newCall(request).execute()
-                    println(response.code)
-                } catch (e: Exception) {
-                    //doze状态和待机模式这里会报异常
-                    println("doze 异常 ${e.message}")
+            when (msg.what) {
+                100 -> {
+                    Thread {
+                        try {
+                            val client = OkHttpClient();
+                            val request = Request.Builder()
+                                .url("https://www.baidu.com")
+                                .build();
+                            val response = client.newCall(request).execute()
+                            println(response.code)
+                        } catch (e: Exception) {
+                            //doze状态和待机模式这里会报异常
+                            println("doze 异常 ${e.message}")
+                        }
+                    }.start()
+                    sendEmptyMessageDelayed(100, 5000)
                 }
-            }.start()
-            sendEmptyMessageDelayed(100, 5000)
+                101 -> {
+                    println("handler loop 10 secs")
+                    sendEmptyMessageDelayed(101, 10_000)
+                }
+            }
         }
     }
 }
